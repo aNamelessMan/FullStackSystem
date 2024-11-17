@@ -1,8 +1,9 @@
 // api/index.js
 var socket = new WebSocket("ws://localhost:8080/ws");
 
-let connect = () => {
-  console.log("Attempting Connection...");
+// cb 代表callback，是入参，构造连接时需要传入cb作为onmessage的回调函数
+let connect = cb => {
+  console.log("connecting");
 
   socket.onopen = () => {
     console.log("Successfully Connected");
@@ -10,6 +11,7 @@ let connect = () => {
 
   socket.onmessage = msg => {
     console.log(msg);
+    cb(msg);
   };
 
   socket.onclose = event => {
